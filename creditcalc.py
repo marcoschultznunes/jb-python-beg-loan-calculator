@@ -1,19 +1,34 @@
 from Loan import Loan
+from utils.Utils import Utils
 
-
-loan_principal = float(input("Enter the loan principal:\n"))
-curr_loan = Loan(loan_principal)
 
 print("What do you want to calculate?")
-print('type "m" - for number of monthly payments,')
-print('type "p" - for the monthly payment:')
+print('type "n" - for number of monthly payments,')
+print('type "a" for annuity monthly payment amount,')
+print('type "p" for loan principal:')
 opt = input()
 
-if opt == "m":
+
+if opt == "n":
+    loan_principal = float(input("Enter the loan principal:\n"))
     m_pay = float(input("Enter the monthly payment:\n"))
-    months = curr_loan.calculate_months(m_pay)
-    print(f"\nIt will take {months} month{'s' if months > 1 else '' } to repay the loan")
+    interest = float(input("Enter the loan interest:\n"))
+    curr_loan = Loan(principal=loan_principal, annuity=m_pay, interest=interest)
+    months = curr_loan.calculate_months_w_interest()
+    print(f"\nIt will take {Utils.months_to_extended(months)} to repay this loan!")
+
+elif opt == "a":
+    loan_principal = float(input("Enter the loan principal:\n"))
+    periods = int(input("Enter the number of periods:\n"))
+    interest = float(input("Enter the loan interest:\n"))
+    curr_loan = Loan(principal=loan_principal, periods=periods, interest=interest)
+    m_pay = curr_loan.calculate_annuity()
+    print(f"\nYour monthly payment = {m_pay}!")
+
 elif opt == "p":
-    months = int(input("Enter the number of months:\n"))
-    m_pay, last_pay = curr_loan.calculate_monthly_pay(months)
-    print(f"\nYour monthly payment = {m_pay} and the last payment = {last_pay}")
+    annuity = float(input("Enter the annuity payment:\n"))
+    periods = int(input("Enter the number of periods:\n"))
+    interest = float(input("Enter the loan interest:\n"))
+    curr_loan = Loan(annuity=annuity, periods=periods, interest=interest)
+    principal = curr_loan.calculate_principal()
+    print(f"\nYour loan principal = {principal}!")
