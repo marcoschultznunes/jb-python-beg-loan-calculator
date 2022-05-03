@@ -19,8 +19,8 @@ class Loan:
 
     def calculate_months_w_interest(self):
         form = self.annuity / (self.annuity - self.interest * self.principal)
-        months = math.ceil(math.log(form, 1 + self.interest))
-        return months
+        self.periods = math.ceil(math.log(form, 1 + self.interest))
+        return self.periods
 
     def calculate_monthly_pay(self):
         self.annuity = math.ceil(self.principal / self.periods)
