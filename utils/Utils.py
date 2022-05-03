@@ -8,3 +8,7 @@ class Utils:
             extended += f" and {months} month{'s' if months > 1 else ''}"
 
         return extended
+
+    @staticmethod
+    def to_years(months):
+        return months/12
